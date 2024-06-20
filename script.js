@@ -1,39 +1,7 @@
 const materials = [
     { name: "Etiketter", location: "Miljö rum, röd gång" },
     { name: "Brun-vit tvätt säck", location: "Miljö rum, röd gång" },
-    { name: "Brun tejp", location: "Miljö rum, röd gång" },
-    { name: "Vtn lös Tvättsäck", location: "Miljö rum, röd gång" },
-    { name: "Gul plast tvättsäck", location: "Miljö rum, röd gång" },
-    { name: "riskburk-låda", location: "Miljö rum, röd gång" },
-    { name: "plastburk 600ml", location: "Miljö rum, röd gång" },
-    { name: "Papper/Kartong", location: "Lämna" },
-    { name: "Plast/Glas/Metall", location: "Lämna" },
-    { name: "Risklåda", location: "Lämna" },
-    { name: "Smutsiga Personal-", location: "Lämna" },
-    { name: "Västar", location: "Lämna" },
-    { name: "Toner", location: "Lämna" },
-    { name: "Udda tvätt", location: "Föråd 6, Röd Gång" },
-    { name: "Jogging, Personal", location: "Föråd 6, Röd Gång" },
-    { name: "Väst", location: "Föråd 6, Röd Gång" },
-    { name: "Barnkläder", location: "Föråd 6, Röd Gång" },
-    { name: "Värmemössa", location: "Föråd 6, Röd Gång" },
-    { name: "Barlakan", location: "Föråd 6, Röd Gång" },
-    { name: "Badlakan", location: "Föråd 6, Röd Gång" },
-    { name: "Disk medel till Gult Pentry", location: "Föråd 6, Röd Gång" },
-    { name: "Etiketter, kuvert", location: "Föråd 6, Röd Gång" },
-    { name: "Kopieringspapper", location: "Föråd 6, Röd Gång" },
-    { name: "patientarmband", location: "Föråd 6, Röd Gång" },
-    { name: "termo etiketter", location: "Föråd 6, Röd Gång" },
-    { name: "Longopac", location: "Föråd 6, Röd Gång" },
-    { name: "Nacl - Spruta 10 ml", location: "Föråd 6, Röd Gång" },
-    { name: "Tryckeripapper", location: "Föråd 6, Röd Gång" },
-    { name: "Metts TraumaJournal", location: "Föråd 6, Röd Gång" },
-    { name: "Informationsbrochyrer", location: "Föråd 6, Röd Gång" },
-    { name: "CM Cover", location: "Föråd 6, Röd Gång" },
-    { name: "blå Rock t. Akutrum", location: "Föråd 6, Röd Gång" },
-    { name: "Betastöd, för utlåning", location: "Föråd 6, Röd Gång" },
-    { name: "rullator", location: "Föråd 6, Röd Gång" },
-    // Add more materials as needed...
+    // Lägg till fler material som behövs...
 ];
 
 function searchMaterials() {
@@ -42,13 +10,28 @@ function searchMaterials() {
     const ul = document.getElementById('materialList');
     ul.innerHTML = '';
 
-    materials.forEach(material => {
+    materials.forEach((material, index) => {
         if (material.name.toLowerCase().includes(filter)) {
             const li = document.createElement('li');
-            li.textContent = `${material.name} - ${material.location}`;
+            li.innerHTML = `${material.name} - ${material.location} <button onclick="flagMaterial(${index})">Flagga</button>`;
             ul.appendChild(li);
         }
     });
+}
+
+function flagMaterial(index) {
+    const material = materials[index];
+    const emailParams = {
+        material_name: material.name,
+        material_location: material.location
+    };
+
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', emailParams)
+        .then(response => {
+            alert('Flaggningsmeddelande skickat framgångsrikt!', response.status, response.text);
+        }, error => {
+            alert('Det uppstod ett fel vid skickandet av flaggningsmeddelandet.', error);
+        });
 }
 
 // Initially display all materials
