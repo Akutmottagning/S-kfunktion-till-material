@@ -1,4 +1,4 @@
-const materials = [
+let materials = [
     { name: "Etiketter", location: "Miljö rum, röd gång" },
     { name: "Brun-vit tvätt säck", location: "Miljö rum, röd gång" },
     { name: "Brun tejp", location: "Miljö rum, röd gång" },
@@ -49,6 +49,22 @@ function searchMaterials() {
             ul.appendChild(li);
         }
     });
+}
+
+function addMaterial() {
+    const nameInput = document.getElementById('newMaterialName');
+    const locationInput = document.getElementById('newMaterialLocation');
+    const name = nameInput.value.trim();
+    const location = locationInput.value.trim();
+
+    if (name && location) {
+        materials.push({ name, location });
+        nameInput.value = '';
+        locationInput.value = '';
+        searchMaterials(); // Refresh the list to include the new material
+    } else {
+        alert("Vänligen fyll i både materialnamn och plats.");
+    }
 }
 
 // Initially display all materials
