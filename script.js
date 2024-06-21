@@ -1,4 +1,4 @@
-const materials = [
+let materials = [
     { name: "Etiketter", location: "Miljö rum, röd gång" },
     { name: "Brun-vit tvätt säck", location: "Miljö rum, röd gång" },
     { name: "Brun tejp", location: "Miljö rum, röd gång" },
@@ -51,5 +51,12 @@ function searchMaterials() {
     });
 }
 
-// Initially display all materials
-searchMaterials();
+function addMaterial() {
+    const nameInput = document.getElementById('newMaterialName');
+    const locationInput = document.getElementById('newMaterialLocation');
+    const name = nameInput.value.trim();
+    const location = locationInput.value.trim();
+
+    if (name && location) {
+        materials.push({ name, location });
+        nameInput
