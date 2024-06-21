@@ -59,4 +59,13 @@ function addMaterial() {
 
     if (name && location) {
         materials.push({ name, location });
-        nameInput
+        nameInput.value = '';
+        locationInput.value = '';
+        searchMaterials(); // Refresh the list to include the new material
+    } else {
+        alert("Vänligen fyll i både materialnamn och plats.");
+    }
+}
+
+// Initially display all materials
+searchMaterials();
